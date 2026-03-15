@@ -1,1 +1,105 @@
+# NBA Betting Repository Rules
 
+These rules guide Cursor agents when generating code in this repository.
+
+Primary goal: **data correctness and temporal safety**.
+
+------------------------------------------------------------------------
+
+# General Coding Rules
+
+-   Write clean, readable Python
+-   Prefer small, well-documented functions
+-   Avoid unnecessary abstraction
+-   Do not generate overly complex files
+
+------------------------------------------------------------------------
+
+# Data Pipeline Rules
+
+Architecture must follow:
+
+RAW → NORMALIZED → FEATURES
+
+Never mix responsibilities between layers.
+
+------------------------------------------------------------------------
+
+# Raw Data Rules
+
+Raw API responses must be stored exactly as received.
+
+Raw storage must include: - endpoint - request parameters - response
+json - ingestion timestamp - HTTP status
+
+Never modify raw data.
+
+------------------------------------------------------------------------
+
+# Temporal Safety
+
+When building features for a game: Only use information from games
+**before that game date**.
+
+Never introduce future data.
+
+------------------------------------------------------------------------
+
+# Database Rules
+
+-   PostgreSQL must be used
+-   SQLAlchemy 2.0 style models
+-   Schema changes via Alembic migrations only
+
+------------------------------------------------------------------------
+
+# API Client Rules
+
+NBA Stats API requires browser-like headers.
+
+HTTP client must support: - configurable headers - timeout - retry
+logic - error handling
+
+------------------------------------------------------------------------
+
+# Code Organization
+
+All production logic must live in `src/`.
+
+Do not implement important logic only in notebooks.
+
+------------------------------------------------------------------------
+
+# Testing Rules
+
+Important components must have tests: - API client - ingestion -
+normalization logic
+
+Use pytest.
+
+------------------------------------------------------------------------
+
+# Modeling Rules
+
+Do not introduce complex models until the dataset pipeline is stable.
+
+Start with: - logistic regression baseline
+
+------------------------------------------------------------------------
+
+# Betting Simulation Rules
+
+Prediction and betting decision must remain separate.
+
+Prediction → probability estimation\
+Betting → decision based on edge vs odds
+
+------------------------------------------------------------------------
+
+# Development Priority
+
+1.  Reliable ingestion\
+2.  Clean normalized schema\
+3.  Temporal feature pipeline\
+4.  Baseline model\
+5.  Advanced research
